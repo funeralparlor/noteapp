@@ -17,8 +17,9 @@
       --sans: 'IBM Plex Sans', sans-serif;
     }
     body { font-family: var(--sans); background: var(--bg); color: var(--text); min-height: 100vh; }
-    .shell { max-width: 740px; margin: 0 auto; padding: 32px 24px 60px; }
+    .shell { max-width: 740px; margin: 0 auto; padding: 32px 24px 120px; }
 
+    /* ── Topbar ── */
     .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
     .brand { display: flex; align-items: center; gap: 8px; }
     .brand-mark { width: 22px; height: 22px; background: var(--text); border-radius: 4px; display: flex; align-items: center; justify-content: center; }
@@ -33,6 +34,16 @@
     .icon-btn:hover { border-color: var(--text); color: var(--text); }
     .icon-btn.copy-done { border-color: var(--green); color: var(--green); background: var(--green-dim); }
 
+    /* ── File info bar ── */
+    .file-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; padding: 8px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 7px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+    .file-bar .file-name { color: var(--accent); font-weight: 500; flex: 1; }
+    .file-bar .file-count { color: var(--hint); }
+    .file-nav { display: flex; gap: 4px; }
+    .nav-btn { padding: 3px 8px; border: 1px solid var(--border); border-radius: 4px; background: var(--surface); color: var(--muted); font-size: 11px; font-family: var(--mono); cursor: pointer; transition: all 0.12s; }
+    .nav-btn:hover:not(:disabled) { border-color: var(--text); color: var(--text); }
+    .nav-btn:disabled { opacity: 0.35; cursor: default; }
+
+    /* ── Meta fields ── */
     .meta-grid   { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
     .meta-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
     .meta-field  { display: flex; flex-direction: column; gap: 4px; }
@@ -40,8 +51,12 @@
     .meta-input, .meta-select { padding: 7px 10px; border: 1px solid var(--border); border-radius: 5px; font-size: 12px; font-family: var(--mono); color: var(--text); background: var(--surface); outline: none; transition: border 0.15s; width: 100%; }
     .meta-input:focus, .meta-select:focus { border-color: var(--accent); }
     .meta-input::placeholder { color: var(--hint); }
+    .customer-wrap { position: relative; }
+    .lookup-hint { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 10px; font-family: var(--mono); color: var(--hint); pointer-events: none; }
+    .lookup-hint.found { color: var(--green); }
+    .lookup-hint.new   { color: var(--amber); }
 
-    /* Description card — internal only */
+    /* ── Description card ── */
     .desc-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
     .desc-header { padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--bg); display: flex; align-items: center; justify-content: space-between; }
     .desc-label-row { display: flex; align-items: center; gap: 8px; }
@@ -52,13 +67,12 @@
     .desc-body textarea {
       width: 100%; border: none; outline: none; resize: none;
       padding: 14px 16px; font-size: 13px; line-height: 1.75;
-      font-family: var(--sans); color: var(--text); background: var(--surface);
-      min-height: 80px;
-      /* Prevent copying */
+      font-family: var(--sans); color: var(--text); background: var(--surface); min-height: 80px;
       user-select: none; -webkit-user-select: none; -moz-user-select: none;
     }
     .desc-body textarea::placeholder { color: var(--hint); }
 
+    /* ── SOAP cards ── */
     .soap-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
     .soap-header { padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--bg); display: flex; align-items: center; justify-content: space-between; }
     .soap-label { display: flex; align-items: center; gap: 10px; }
@@ -69,16 +83,20 @@
     .soap-body textarea { width: 100%; border: none; outline: none; resize: none; padding: 14px 16px; font-size: 13px; line-height: 1.78; font-family: var(--sans); color: var(--text); background: var(--surface); min-height: 90px; }
     .soap-body textarea::placeholder { color: var(--hint); }
 
-    .actions { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
-    .action-left { display: flex; gap: 8px; }
+    /* ── Actions ── */
+    .actions { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; flex-wrap: wrap; gap: 8px; }
+    .action-left { display: flex; gap: 8px; flex-wrap: wrap; }
     .act-btn { padding: 8px 16px; border-radius: 6px; font-size: 12px; font-family: var(--mono); cursor: pointer; transition: all 0.15s; border: 1px solid var(--border); }
-    .act-btn.primary  { background: var(--text); color: #fff; border-color: var(--text); }
-    .act-btn.primary:hover  { opacity: 0.85; }
+    .act-btn.primary   { background: var(--text); color: #fff; border-color: var(--text); }
+    .act-btn.primary:hover   { opacity: 0.85; }
     .act-btn.secondary { background: var(--surface); color: var(--muted); }
     .act-btn.secondary:hover { border-color: var(--text); color: var(--text); }
-    .act-btn.danger { background: var(--surface); color: var(--red); border-color: #fca5a5; }
-    .act-btn.danger:hover { background: var(--red-dim); }
+    .act-btn.new-note  { background: var(--surface); color: var(--accent); border-color: #b5d4f4; }
+    .act-btn.new-note:hover  { background: var(--accent-dim); border-color: var(--accent); }
+    .act-btn.danger    { background: var(--surface); color: var(--red); border-color: #fca5a5; }
+    .act-btn.danger:hover    { background: var(--red-dim); }
 
+    /* ── Preview panel ── */
     .preview-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-top: 14px; display: none; }
     .preview-panel.visible { display: block; }
     .preview-header { padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--bg); display: flex; align-items: center; justify-content: space-between; }
@@ -88,14 +106,59 @@
     .pk { font-weight: 500; color: var(--accent); }
     .pm { font-weight: 500; color: var(--muted); }
 
-    .toast { position: fixed; bottom: 20px; right: 20px; padding: 8px 16px; border-radius: 6px; font-size: 12px; font-family: var(--mono); opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 999; }
+    /* ── Floating scroll nav ── */
+    .scroll-nav {
+      position: fixed; right: 24px; bottom: 32px;
+      display: flex; flex-direction: column; gap: 6px; z-index: 200;
+    }
+    .scroll-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--text); color: #fff;
+      border: none; cursor: pointer; font-size: 14px;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.15s; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .scroll-btn:hover { opacity: 0.8; }
+    .scroll-btn svg { width: 14px; height: 14px; fill: none; stroke: #fff; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ── Recent notes drawer ── */
+    .drawer { position: fixed; top: 0; right: -320px; width: 300px; height: 100vh; background: var(--surface); border-left: 1px solid var(--border); z-index: 300; transition: right 0.25s ease; display: flex; flex-direction: column; }
+    .drawer.open { right: 0; }
+    .drawer-header { padding: 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .drawer-title { font-size: 12px; font-weight: 500; font-family: var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
+    .drawer-list { flex: 1; overflow-y: auto; padding: 8px 0; }
+    .drawer-item { padding: 10px 16px; cursor: pointer; border-left: 3px solid transparent; transition: background 0.1s; }
+    .drawer-item:hover { background: var(--bg); }
+    .drawer-item.active { border-left-color: var(--accent); background: var(--accent-dim); }
+    .drawer-item .di-name { font-size: 13px; font-weight: 500; color: var(--text); }
+    .drawer-item .di-file { font-size: 10px; color: var(--hint); font-family: var(--mono); margin-top: 2px; }
+    .drawer-empty { padding: 20px 16px; font-size: 12px; color: var(--hint); font-family: var(--mono); }
+
+    /* ── Toast ── */
+    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 8px 18px; border-radius: 6px; font-size: 12px; font-family: var(--mono); opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 999; white-space: nowrap; }
     .toast.show { opacity: 1; }
-    .toast.ok   { background: var(--green-dim); color: var(--green); border: 1px solid var(--green); }
-    .toast.info { background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent); }
+    .toast.ok    { background: var(--green-dim); color: var(--green); border: 1px solid var(--green); }
+    .toast.info  { background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent); }
+    .toast.warn  { background: #fffbeb; color: var(--amber); border: 1px solid var(--amber); }
+
+    /* ── Overlay ── */
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.2); z-index: 299; display: none; }
+    .overlay.open { display: block; }
   </style>
 </head>
 <body>
-<div class="shell">
+
+<!-- Recent notes drawer -->
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <span class="drawer-title">Recent notes</span>
+    <button class="icon-btn" onclick="closeDrawer()">close</button>
+  </div>
+  <div class="drawer-list" id="drawer-list"></div>
+</div>
+
+<div class="shell" id="top-anchor">
 
   <div class="topbar">
     <div class="brand">
@@ -107,8 +170,20 @@
         <div class="s-dot" id="s-dot"></div>
         <span id="s-label">all saved</span>
       </div>
+      <button class="icon-btn" onclick="openDrawer()">notes</button>
       <button class="icon-btn" id="preview-btn" onclick="togglePreview()">preview</button>
       <button class="icon-btn" id="copy-btn" onclick="copyAll()">copy</button>
+    </div>
+  </div>
+
+  <!-- File info bar -->
+  <div class="file-bar">
+    <span>file:</span>
+    <span class="file-name" id="file-name">unsaved</span>
+    <span class="file-count" id="file-count"></span>
+    <div class="file-nav">
+      <button class="nav-btn" id="nav-prev" onclick="navNote(-1)" disabled title="Previous note">&#8592; prev</button>
+      <button class="nav-btn" id="nav-next" onclick="navNote(1)"  disabled title="Next note">next &#8594;</button>
     </div>
   </div>
 
@@ -116,7 +191,10 @@
   <div class="meta-grid">
     <div class="meta-field">
       <span class="meta-label">Customer name</span>
-      <input class="meta-input" id="customer" placeholder="Full name" oninput="autoSave()" />
+      <div class="customer-wrap">
+        <input class="meta-input" id="customer" placeholder="Full name" oninput="onCustomerInput()" style="padding-right: 60px;" />
+        <span class="lookup-hint" id="lookup-hint"></span>
+      </div>
     </div>
     <div class="meta-field">
       <span class="meta-label">Verified by</span>
@@ -224,7 +302,7 @@
   </div>
 
   <!-- P -->
-  <div class="soap-card">
+  <div class="soap-card" id="bottom-anchor">
     <div class="soap-header">
       <div class="soap-label">
         <div class="soap-letter">P</div>
@@ -244,10 +322,11 @@
 
   <div class="actions">
     <div class="action-left">
-      <button class="act-btn primary" onclick="copyAll()">copy for ServiceNow</button>
-      <button class="act-btn secondary" onclick="togglePreview()">preview note</button>
+      <button class="act-btn primary"    onclick="copyAll()">copy for ServiceNow</button>
+      <button class="act-btn secondary"  onclick="togglePreview()">preview note</button>
+      <button class="act-btn new-note"   onclick="newNote()">+ new note</button>
     </div>
-    <button class="act-btn danger" onclick="clearAll()">clear</button>
+    <button class="act-btn danger" onclick="clearCurrent()">clear</button>
   </div>
 
   <div class="preview-panel" id="preview-panel">
@@ -261,28 +340,136 @@
     <div class="preview-body" id="preview-body"></div>
   </div>
 
+</div><!-- end .shell -->
+
+<!-- Floating scroll nav -->
+<div class="scroll-nav">
+  <button class="scroll-btn" onclick="scrollTop()" title="Scroll to top">
+    <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+  <button class="scroll-btn" onclick="scrollBottom()" title="Scroll to bottom">
+    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+  </button>
 </div>
+
 <div class="toast" id="toast"></div>
 
 <script>
   let saveTimer = null;
+  let currentFilename = null;
+  let notesList = [];      // list of filenames from server, newest first
+  let currentIndex = -1;  // index into notesList
+  let lookupTimer = null;
 
-  async function loadNote() {
-    const res = await fetch('/note');
-    const d = await res.json();
-    if (d.customer)   document.getElementById('customer').value    = d.customer;
-    if (d.verifiedBy) document.getElementById('verified-by').value = d.verifiedBy;
-    if (d.role)       document.getElementById('role').value        = d.role;
-    if (d.ticket)     document.getElementById('ticket').value      = d.ticket;
-    if (d.date)       document.getElementById('date').value        = d.date;
-    if (d.desc)       document.getElementById('desc-field').value  = d.desc;
-    if (d.s)          document.getElementById('s-field').value     = d.s;
-    if (d.o)          document.getElementById('o-field').value     = d.o;
-    if (d.a)          document.getElementById('a-field').value     = d.a;
-    if (d.p)          document.getElementById('p-field').value     = d.p;
-    ['s','o','a','p'].forEach(k => cc(k+'-field', 'cc-'+k));
+  // ── Boot ──────────────────────────────────────────────────────────────
+  async function boot() {
+    document.getElementById('date').value = new Date().toISOString().split('T')[0];
+    await refreshNotesList();
+    // Load most recent note if any
+    if (notesList.length > 0) {
+      await loadNoteByFilename(notesList[0]);
+    }
+    updateFileBar();
   }
 
+  // ── Notes list ────────────────────────────────────────────────────────
+  async function refreshNotesList() {
+    const res = await fetch('/notes/list');
+    notesList = await res.json();
+    updateFileBar();
+    renderDrawer();
+  }
+
+  function updateFileBar() {
+    const fnEl = document.getElementById('file-name');
+    const cntEl = document.getElementById('file-count');
+    fnEl.textContent = currentFilename ? currentFilename + '.json' : 'unsaved';
+    if (notesList.length > 0) {
+      currentIndex = notesList.indexOf(currentFilename);
+      cntEl.textContent = currentIndex >= 0
+        ? `(${currentIndex + 1} of ${notesList.length})`
+        : `(${notesList.length} saved)`;
+    } else {
+      cntEl.textContent = '';
+    }
+    document.getElementById('nav-prev').disabled = currentIndex <= 0;
+    document.getElementById('nav-next').disabled = currentIndex < 0 || currentIndex >= notesList.length - 1;
+  }
+
+  // ── Nav prev/next ─────────────────────────────────────────────────────
+  async function navNote(dir) {
+    const newIdx = currentIndex + dir;
+    if (newIdx < 0 || newIdx >= notesList.length) return;
+    await loadNoteByFilename(notesList[newIdx]);
+  }
+
+  // ── Load a note by filename ───────────────────────────────────────────
+  async function loadNoteByFilename(filename) {
+    const res = await fetch('/note/load/' + filename);
+    if (!res.ok) return;
+    const d = await res.json();
+    fillForm(d);
+    currentFilename = filename;
+    currentIndex = notesList.indexOf(filename);
+    updateFileBar();
+    renderDrawer();
+    setDot('saved');
+  }
+
+  function fillForm(d) {
+    document.getElementById('customer').value    = d.customer   || '';
+    document.getElementById('verified-by').value = d.verifiedBy || 'ID';
+    document.getElementById('role').value        = d.role       || 'Student';
+    document.getElementById('ticket').value      = d.ticket     || '';
+    document.getElementById('date').value        = d.date       || new Date().toISOString().split('T')[0];
+    document.getElementById('desc-field').value  = d.desc       || '';
+    document.getElementById('s-field').value     = d.s          || '';
+    document.getElementById('o-field').value     = d.o          || '';
+    document.getElementById('a-field').value     = d.a          || '';
+    document.getElementById('p-field').value     = d.p          || '';
+    ['s','o','a','p'].forEach(k => cc(k+'-field', 'cc-'+k));
+    setLookupHint('');
+    document.getElementById('preview-panel').classList.remove('visible');
+    document.getElementById('preview-btn').textContent = 'preview';
+  }
+
+  // ── Customer name → file lookup ───────────────────────────────────────
+  function onCustomerInput() {
+    autoSave();
+    clearTimeout(lookupTimer);
+    const val = document.getElementById('customer').value.trim();
+    if (!val) { setLookupHint(''); return; }
+    lookupTimer = setTimeout(async () => {
+      const res = await fetch('/note/find?customer=' + encodeURIComponent(val));
+      const data = await res.json();
+      if (data.found) {
+        setLookupHint('found', '✓ found');
+        // Only auto-load if it's a different file
+        if (data.filename !== currentFilename) {
+          fillForm(data.data);
+          currentFilename = data.filename;
+          currentIndex = notesList.indexOf(currentFilename);
+          updateFileBar();
+          renderDrawer();
+          showToast('Loaded existing note: ' + data.filename + '.json', 'info');
+        }
+      } else {
+        setLookupHint('new', 'new');
+        if (currentFilename && data.filename !== currentFilename) {
+          // switching to a new customer — reset filename so it saves separately
+          currentFilename = null;
+        }
+      }
+    }, 600);
+  }
+
+  function setLookupHint(type, text) {
+    const el = document.getElementById('lookup-hint');
+    el.textContent = text || '';
+    el.className = 'lookup-hint' + (type ? ' ' + type : '');
+  }
+
+  // ── Autosave ──────────────────────────────────────────────────────────
   function collect() {
     return {
       customer:   document.getElementById('customer').value,
@@ -290,7 +477,7 @@
       role:       document.getElementById('role').value,
       ticket:     document.getElementById('ticket').value,
       date:       document.getElementById('date').value,
-      desc:       document.getElementById('desc-field').value,  // saved but never copied
+      desc:       document.getElementById('desc-field').value,
       s:          document.getElementById('s-field').value,
       o:          document.getElementById('o-field').value,
       a:          document.getElementById('a-field').value,
@@ -302,13 +489,20 @@
     setDot('saving');
     clearTimeout(saveTimer);
     saveTimer = setTimeout(async () => {
-      await fetch('/note', {
+      const d = collect();
+      if (!d.customer.trim() && !d.s && !d.o && !d.a && !d.p) {
+        setDot('saved'); return; // nothing worth saving
+      }
+      const res = await fetch('/note/save', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(collect())
+        body: JSON.stringify(d)
       });
+      const result = await res.json();
+      currentFilename = result.filename;
       setDot('saved');
-    }, 700);
+      await refreshNotesList();
+    }, 800);
   }
 
   function setDot(state) {
@@ -320,27 +514,63 @@
     document.getElementById(cid).textContent = document.getElementById(fid).value.length;
   }
 
+  // ── New note ──────────────────────────────────────────────────────────
+  async function newNote() {
+    // Save current first if it has content
+    const d = collect();
+    const hasContent = d.customer.trim() || d.s || d.o || d.a || d.p;
+    if (hasContent) {
+      await fetch('/note/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(d)
+      });
+      showToast('Previous note saved', 'ok');
+    }
+    // Reset form
+    currentFilename = null;
+    fillForm({});
+    document.getElementById('date').value = new Date().toISOString().split('T')[0];
+    await refreshNotesList();
+    document.getElementById('customer').focus();
+    showToast('New note — start typing', 'info');
+  }
+
+  // ── Clear current ─────────────────────────────────────────────────────
+  async function clearCurrent() {
+    if (!confirm('Clear this note? It will be deleted from disk.')) return;
+    if (currentFilename) {
+      await fetch('/note/delete/' + currentFilename, { method: 'DELETE' });
+    }
+    currentFilename = null;
+    fillForm({});
+    document.getElementById('date').value = new Date().toISOString().split('T')[0];
+    await refreshNotesList();
+    setDot('saved');
+    showToast('Note cleared', 'info');
+  }
+
+  // ── Build text / preview ──────────────────────────────────────────────
   function buildText(d) {
     const meta = [];
-    if (d.customer)   meta.push('Customer: '    + d.customer);
-    if (d.verifiedBy) meta.push('Verified by: ' + d.verifiedBy);
-    if (d.role)       meta.push('Role: '        + d.role);
-    if (d.ticket)     meta.push('Ticket: '      + d.ticket);
-    if (d.date)       meta.push('Date: '        + d.date);
+    if (d.customer)   meta.push('Customer: '       + d.customer);
+    if (d.verifiedBy) meta.push('Verified by: '    + d.verifiedBy);
+    if (d.role)       meta.push('Role: '           + d.role);
+    if (d.ticket)     meta.push('Related Ticket: ' + d.ticket);
+    if (d.date)       meta.push('Date: '           + d.date);
     const lines = [];
     if (meta.length) lines.push(meta.join('  |  '), '');
     lines.push('[S]', d.s || '—', '');
-    lines.push('[O]',  d.o || '—', '');
+    lines.push('[O]', d.o || '—', '');
     lines.push('[A]', d.a || '—', '');
-    lines.push('[P]',       d.p || '—');
+    lines.push('[P]', d.p || '—');
     return lines.join('\n');
-    // NOTE: d.desc is intentionally excluded from the output
   }
 
   function buildPreviewHTML(text) {
     return text
-      .replace(/\[(SUBJECTIVE|OBJECTIVE|ASSESSMENT|PLAN)\]/g, '<span class="pk">[$1]</span>')
-      .replace(/(Customer:|Verified by:|Role:|Ticket:|Date:)/g, '<span class="pm">$1</span>');
+      .replace(/\[([SOAP])\]/g, '<span class="pk">[$1]</span>')
+      .replace(/(Customer:|Verified by:|Role:|Related Ticket:|Date:)/g, '<span class="pm">$1</span>');
   }
 
   async function togglePreview() {
@@ -352,18 +582,21 @@
       document.getElementById('preview-body').innerHTML = buildPreviewHTML(text);
       panel.classList.add('visible');
       document.getElementById('preview-btn').textContent = 'hide';
-
-      // Save to server when preview is opened
-      const res  = await fetch('/note/preview', {
+      // Save on preview
+      const res    = await fetch('/note/preview', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(d)
       });
       const result = await res.json();
+      currentFilename = result.filename;
       setDot('saved');
+      await refreshNotesList();
       const ts = new Date(result.savedAt).toLocaleTimeString();
       document.getElementById('saved-on-preview').textContent = 'saved at ' + ts;
-      showToast('Preview saved to soap_note.json', 'ok');
+      showToast('Saved to notes/' + result.filename + '.json', 'ok');
+      // Scroll preview into view
+      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
       panel.classList.remove('visible');
       document.getElementById('preview-btn').textContent = 'preview';
@@ -380,31 +613,53 @@
     });
   }
 
-  async function clearAll() {
-    if (!confirm('Clear all fields?')) return;
-    ['customer','ticket','date','desc-field','s-field','o-field','a-field','p-field']
-      .forEach(id => document.getElementById(id).value = '');
-    document.getElementById('verified-by').value = 'ID';
-    document.getElementById('role').value = 'Student';
-    ['s','o','a','p'].forEach(k => cc(k+'-field', 'cc-'+k));
-    document.getElementById('preview-panel').classList.remove('visible');
-    document.getElementById('preview-btn').textContent = 'preview';
-    await fetch('/note', { method: 'DELETE' });
-    setDot('saved');
-    showToast('Cleared', 'info');
+  // ── Drawer ────────────────────────────────────────────────────────────
+  function openDrawer() {
+    document.getElementById('drawer').classList.add('open');
+    document.getElementById('overlay').classList.add('open');
+  }
+  function closeDrawer() {
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('overlay').classList.remove('open');
+  }
+  function renderDrawer() {
+    const list = document.getElementById('drawer-list');
+    if (notesList.length === 0) {
+      list.innerHTML = '<div class="drawer-empty">No saved notes yet.</div>';
+      return;
+    }
+    list.innerHTML = notesList.map(fn => `
+      <div class="drawer-item ${fn === currentFilename ? 'active' : ''}" onclick="loadFromDrawer('${fn}')">
+        <div class="di-name">${fn.replace(/_/g, ' ')}</div>
+        <div class="di-file">${fn}.json</div>
+      </div>
+    `).join('');
+  }
+  async function loadFromDrawer(filename) {
+    closeDrawer();
+    await loadNoteByFilename(filename);
+    scrollTop();
   }
 
+  // ── Scroll helpers ────────────────────────────────────────────────────
+  function scrollTop()    { document.getElementById('top-anchor').scrollIntoView({ behavior: 'smooth' }); }
+  function scrollBottom() { document.getElementById('bottom-anchor').scrollIntoView({ behavior: 'smooth' }); }
+
+  // ── Toast ─────────────────────────────────────────────────────────────
   function showToast(msg, cls) {
     const t = document.getElementById('toast');
     t.textContent = msg;
     t.className = 'toast ' + cls + ' show';
-    setTimeout(() => t.className = 'toast ' + cls, 2500);
+    setTimeout(() => t.className = 'toast ' + cls, 2800);
   }
 
+  // ── Block copy/cut on description ─────────────────────────────────────
+  const desc = document.getElementById('desc-field');
+  desc.addEventListener('copy',        e => e.preventDefault());
+  desc.addEventListener('cut',         e => e.preventDefault());
+  desc.addEventListener('contextmenu', e => e.preventDefault());
 
-
-  document.getElementById('date').value = new Date().toISOString().split('T')[0];
-  loadNote();
+  boot();
 </script>
 </body>
 </html>
