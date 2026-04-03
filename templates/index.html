@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SOAP Doc — ServiceNow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f7f6f3; --surface: #fff; --border: #e2e0db;
+      --text: #1a1917; --muted: #8a8782; --hint: #b8b5b0;
+      --accent: #1f6feb; --accent-dim: #e8f0fd;
+      --green: #16a34a; --green-dim: #f0fdf4;
+      --amber: #b45309; --red: #dc2626; --red-dim: #fef2f2;
+      --mono: 'IBM Plex Mono', monospace;
+      --sans: 'IBM Plex Sans', sans-serif;
+    }
+    body { font-family: var(--sans); background: var(--bg); color: var(--text); min-height: 100vh; }
+    .shell { max-width: 740px; margin: 0 auto; padding: 32px 24px 60px; }
+
+    .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+    .brand { display: flex; align-items: center; gap: 8px; }
+    .brand-mark { width: 22px; height: 22px; background: var(--text); border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+    .brand-mark span { color: #fff; font-size: 9px; font-weight: 500; font-family: var(--mono); }
+    .brand-name { font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: 0.07em; text-transform: uppercase; font-family: var(--mono); }
+    .topbar-right { display: flex; align-items: center; gap: 10px; }
+    .save-status { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--hint); font-family: var(--mono); }
+    .s-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--hint); transition: background 0.3s; }
+    .s-dot.saving { background: var(--amber); }
+    .s-dot.saved  { background: var(--green); }
+    .icon-btn { padding: 5px 11px; border: 1px solid var(--border); border-radius: 5px; background: var(--surface); color: var(--muted); font-size: 11px; font-family: var(--mono); cursor: pointer; transition: all 0.15s; }
+    .icon-btn:hover { border-color: var(--text); color: var(--text); }
+    .icon-btn.copy-done { border-color: var(--green); color: var(--green); background: var(--green-dim); }
+
+    .meta-grid   { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+    .meta-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+    .meta-field  { display: flex; flex-direction: column; gap: 4px; }
+    .meta-label  { font-size: 10px; font-weight: 500; color: var(--hint); text-transform: uppercase; letter-spacing: 0.09em; font-family: var(--mono); }
+    .meta-input, .meta-select { padding: 7px 10px; border: 1px solid var(--border); border-radius: 5px; font-size: 12px; font-family: var(--mono); color: var(--text); background: var(--surface); outline: none; transition: border 0.15s; width: 100%; }
+    .meta-input:focus, .meta-select:focus { border-color: var(--accent); }
+    .meta-input::placeholder { color: var(--hint); }
+
+    /* Description card — internal only */
+    .desc-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+    .desc-header { padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--bg); display: flex; align-items: center; justify-content: space-between; }
+    .desc-label-row { display: flex; align-items: center; gap: 8px; }
+    .desc-badge { font-size: 10px; font-weight: 500; font-family: var(--mono); color: var(--surface); background: var(--muted); padding: 2px 7px; border-radius: 4px; }
+    .desc-title { font-size: 12px; font-weight: 500; color: var(--text); }
+    .desc-sub   { font-size: 11px; color: var(--hint); margin-top: 1px; }
+    .no-copy-tag { font-size: 10px; color: var(--hint); font-family: var(--mono); border: 1px solid var(--border); padding: 2px 7px; border-radius: 4px; }
+    .desc-body textarea {
+      width: 100%; border: none; outline: none; resize: none;
+      padding: 14px 16px; font-size: 13px; line-height: 1.75;
+      font-family: var(--sans); color: var(--text); background: var(--surface);
+      min-height: 80px;
+      /* Prevent copying */
+      user-select: none; -webkit-user-select: none; -moz-user-select: none;
+    }
+    .desc-body textarea::placeholder { color: var(--hint); }
+
+    .soap-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+    .soap-header { padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--bg); display: flex; align-items: center; justify-content: space-between; }
+    .soap-label { display: flex; align-items: center; gap: 10px; }
+    .soap-letter { font-size: 11px; font-weight: 500; font-family: var(--mono); color: #fff; background: var(--text); width: 20px; height: 20px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .soap-title { font-size: 12px; font-weight: 500; color: var(--text); }
+    .soap-desc  { font-size: 11px; color: var(--hint); margin-top: 1px; }
+    .char-count { font-size: 10px; color: var(--hint); font-family: var(--mono); }
+    .soap-body textarea { width: 100%; border: none; outline: none; resize: none; padding: 14px 16px; font-size: 13px; line-height: 1.78; font-family: var(--sans); color: var(--text); background: var(--surface); min-height: 90px; }
+    .soap-body textarea::placeholder { color: var(--hint); }
+
+    .actions { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
+    .action-left { display: flex; gap: 8px; }
+    .act-btn { padding: 8px 16px; border-radius: 6px; font-size: 12px; font-family: var(--mono); cursor: pointer; transition: all 0.15s; border: 1px solid var(--border); }
+    .act-btn.primary  { background: var(--text); color: #fff; border-color: var(--text); }
+    .act-btn.primary:hover  { opacity: 0.85; }
+    .act-btn.secondary { background: var(--surface); color: var(--muted); }
+    .act-btn.secondary:hover { border-color: var(--text); color: var(--text); }
+    .act-btn.danger { background: var(--surface); color: var(--red); border-color: #fca5a5; }
+    .act-btn.danger:hover { background: var(--red-dim); }
+
+    .preview-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-top: 14px; display: none; }
+    .preview-panel.visible { display: block; }
+    .preview-header { padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--bg); display: flex; align-items: center; justify-content: space-between; }
+    .preview-header span { font-size: 11px; font-weight: 500; font-family: var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .preview-header-right { display: flex; align-items: center; gap: 10px; }
+    .preview-body { padding: 16px; font-family: var(--mono); font-size: 12px; line-height: 1.85; color: var(--text); white-space: pre-wrap; word-break: break-word; }
+    .pk { font-weight: 500; color: var(--accent); }
+    .pm { font-weight: 500; color: var(--muted); }
+
+    .toast { position: fixed; bottom: 20px; right: 20px; padding: 8px 16px; border-radius: 6px; font-size: 12px; font-family: var(--mono); opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 999; }
+    .toast.show { opacity: 1; }
+    .toast.ok   { background: var(--green-dim); color: var(--green); border: 1px solid var(--green); }
+    .toast.info { background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent); }
+  </style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark"><span>SN</span></div>
+      <span class="brand-name">SOAP Doc</span>
+    </div>
+    <div class="topbar-right">
+      <div class="save-status">
+        <div class="s-dot" id="s-dot"></div>
+        <span id="s-label">all saved</span>
+      </div>
+      <button class="icon-btn" id="preview-btn" onclick="togglePreview()">preview</button>
+      <button class="icon-btn" id="copy-btn" onclick="copyAll()">copy</button>
+    </div>
+  </div>
+
+  <!-- Row 1: Customer name + Verified by -->
+  <div class="meta-grid">
+    <div class="meta-field">
+      <span class="meta-label">Customer name</span>
+      <input class="meta-input" id="customer" placeholder="Full name" oninput="autoSave()" />
+    </div>
+    <div class="meta-field">
+      <span class="meta-label">Verified by</span>
+      <select class="meta-select" id="verified-by" onchange="autoSave()">
+        <option value="ID">ID</option>
+        <option value="Date of Birth">Date of Birth</option>
+        <option value="Street Address">Street Address</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Row 2: Role + Ticket + Date -->
+  <div class="meta-grid-3">
+    <div class="meta-field">
+      <span class="meta-label">Role</span>
+      <select class="meta-select" id="role" onchange="autoSave()">
+        <option value="Student" selected>Student</option>
+        <option value="Faculty">Faculty</option>
+      </select>
+    </div>
+    <div class="meta-field">
+      <span class="meta-label">Related Ticket #</span>
+      <input class="meta-input" id="ticket" placeholder="INC0000000" oninput="autoSave()" />
+    </div>
+    <div class="meta-field">
+      <span class="meta-label">Date</span>
+      <input class="meta-input" id="date" type="date" oninput="autoSave()" />
+    </div>
+  </div>
+
+  <!-- Description — internal, not copyable -->
+  <div class="desc-card">
+    <div class="desc-header">
+      <div class="desc-label-row">
+        <div class="desc-badge">internal</div>
+        <div>
+          <div class="desc-title">Description</div>
+          <div class="desc-sub">Internal context — not included in the copied note</div>
+        </div>
+      </div>
+      <span class="no-copy-tag">not copied</span>
+    </div>
+    <div class="desc-body">
+      <textarea id="desc-field" rows="3"
+        placeholder="Add internal notes, background context, or reminders here — this never appears in the ServiceNow note..."
+        oninput="autoSave()"></textarea>
+    </div>
+  </div>
+
+  <!-- S -->
+  <div class="soap-card">
+    <div class="soap-header">
+      <div class="soap-label">
+        <div class="soap-letter">S</div>
+        <div>
+          <div class="soap-title">Subjective</div>
+          <div class="soap-desc">What the customer reported</div>
+        </div>
+      </div>
+      <span class="char-count" id="cc-s">0</span>
+    </div>
+    <div class="soap-body">
+      <textarea id="s-field" rows="4"
+        placeholder="e.g. Customer reported unable to log into ServiceNow since this morning. States they did not change their password..."
+        oninput="autoSave(); cc('s-field','cc-s')"></textarea>
+    </div>
+  </div>
+
+  <!-- O -->
+  <div class="soap-card">
+    <div class="soap-header">
+      <div class="soap-label">
+        <div class="soap-letter">O</div>
+        <div>
+          <div class="soap-title">Objective</div>
+          <div class="soap-desc">What you observed — logs, findings, reproduction steps</div>
+        </div>
+      </div>
+      <span class="char-count" id="cc-o">0</span>
+    </div>
+    <div class="soap-body">
+      <textarea id="o-field" rows="4"
+        placeholder="e.g. Verified account in Active Directory — active, no lockout. sys_log shows auth error at 08:42. SSO token expired..."
+        oninput="autoSave(); cc('o-field','cc-o')"></textarea>
+    </div>
+  </div>
+
+  <!-- A -->
+  <div class="soap-card">
+    <div class="soap-header">
+      <div class="soap-label">
+        <div class="soap-letter">A</div>
+        <div>
+          <div class="soap-title">Assessment</div>
+          <div class="soap-desc">Root cause, category, priority reasoning</div>
+        </div>
+      </div>
+      <span class="char-count" id="cc-a">0</span>
+    </div>
+    <div class="soap-body">
+      <textarea id="a-field" rows="4"
+        placeholder="e.g. Root cause: SSO session token not refreshed post-maintenance. P2 — single user affected, workaround available..."
+        oninput="autoSave(); cc('a-field','cc-a')"></textarea>
+    </div>
+  </div>
+
+  <!-- P -->
+  <div class="soap-card">
+    <div class="soap-header">
+      <div class="soap-label">
+        <div class="soap-letter">P</div>
+        <div>
+          <div class="soap-title">Plan</div>
+          <div class="soap-desc">Actions taken, resolution, escalation, follow-up</div>
+        </div>
+      </div>
+      <span class="char-count" id="cc-p">0</span>
+    </div>
+    <div class="soap-body">
+      <textarea id="p-field" rows="4"
+        placeholder="e.g. 1. Cleared browser cache — customer able to log in. 2. Raised CHG0001234 to review SSO token TTL. Resolved — monitoring 24h..."
+        oninput="autoSave(); cc('p-field','cc-p')"></textarea>
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="action-left">
+      <button class="act-btn primary" onclick="copyAll()">copy for ServiceNow</button>
+      <button class="act-btn secondary" onclick="togglePreview()">preview note</button>
+    </div>
+    <button class="act-btn danger" onclick="clearAll()">clear</button>
+  </div>
+
+  <div class="preview-panel" id="preview-panel">
+    <div class="preview-header">
+      <span>ServiceNow note preview</span>
+      <div class="preview-header-right">
+        <span style="font-size:10px; color:var(--green); font-family:var(--mono);" id="saved-on-preview"></span>
+        <button class="icon-btn" onclick="togglePreview()">close</button>
+      </div>
+    </div>
+    <div class="preview-body" id="preview-body"></div>
+  </div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+  let saveTimer = null;
+
+  async function loadNote() {
+    const res = await fetch('/note');
+    const d = await res.json();
+    if (d.customer)   document.getElementById('customer').value    = d.customer;
+    if (d.verifiedBy) document.getElementById('verified-by').value = d.verifiedBy;
+    if (d.role)       document.getElementById('role').value        = d.role;
+    if (d.ticket)     document.getElementById('ticket').value      = d.ticket;
+    if (d.date)       document.getElementById('date').value        = d.date;
+    if (d.desc)       document.getElementById('desc-field').value  = d.desc;
+    if (d.s)          document.getElementById('s-field').value     = d.s;
+    if (d.o)          document.getElementById('o-field').value     = d.o;
+    if (d.a)          document.getElementById('a-field').value     = d.a;
+    if (d.p)          document.getElementById('p-field').value     = d.p;
+    ['s','o','a','p'].forEach(k => cc(k+'-field', 'cc-'+k));
+  }
+
+  function collect() {
+    return {
+      customer:   document.getElementById('customer').value,
+      verifiedBy: document.getElementById('verified-by').value,
+      role:       document.getElementById('role').value,
+      ticket:     document.getElementById('ticket').value,
+      date:       document.getElementById('date').value,
+      desc:       document.getElementById('desc-field').value,  // saved but never copied
+      s:          document.getElementById('s-field').value,
+      o:          document.getElementById('o-field').value,
+      a:          document.getElementById('a-field').value,
+      p:          document.getElementById('p-field').value,
+    };
+  }
+
+  function autoSave() {
+    setDot('saving');
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(async () => {
+      await fetch('/note', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(collect())
+      });
+      setDot('saved');
+    }, 700);
+  }
+
+  function setDot(state) {
+    document.getElementById('s-dot').className = 's-dot ' + state;
+    document.getElementById('s-label').textContent = state === 'saving' ? 'saving...' : 'all saved';
+  }
+
+  function cc(fid, cid) {
+    document.getElementById(cid).textContent = document.getElementById(fid).value.length;
+  }
+
+  function buildText(d) {
+    const meta = [];
+    if (d.customer)   meta.push('Customer: '    + d.customer);
+    if (d.verifiedBy) meta.push('Verified by: ' + d.verifiedBy);
+    if (d.role)       meta.push('Role: '        + d.role);
+    if (d.ticket)     meta.push('Ticket: '      + d.ticket);
+    if (d.date)       meta.push('Date: '        + d.date);
+    const lines = [];
+    if (meta.length) lines.push(meta.join('  |  '), '');
+    lines.push('[S]', d.s || '—', '');
+    lines.push('[O]',  d.o || '—', '');
+    lines.push('[A]', d.a || '—', '');
+    lines.push('[P]',       d.p || '—');
+    return lines.join('\n');
+    // NOTE: d.desc is intentionally excluded from the output
+  }
+
+  function buildPreviewHTML(text) {
+    return text
+      .replace(/\[(SUBJECTIVE|OBJECTIVE|ASSESSMENT|PLAN)\]/g, '<span class="pk">[$1]</span>')
+      .replace(/(Customer:|Verified by:|Role:|Ticket:|Date:)/g, '<span class="pm">$1</span>');
+  }
+
+  async function togglePreview() {
+    const panel = document.getElementById('preview-panel');
+    const open  = panel.classList.contains('visible');
+    if (!open) {
+      const d    = collect();
+      const text = buildText(d);
+      document.getElementById('preview-body').innerHTML = buildPreviewHTML(text);
+      panel.classList.add('visible');
+      document.getElementById('preview-btn').textContent = 'hide';
+
+      // Save to server when preview is opened
+      const res  = await fetch('/note/preview', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(d)
+      });
+      const result = await res.json();
+      setDot('saved');
+      const ts = new Date(result.savedAt).toLocaleTimeString();
+      document.getElementById('saved-on-preview').textContent = 'saved at ' + ts;
+      showToast('Preview saved to soap_note.json', 'ok');
+    } else {
+      panel.classList.remove('visible');
+      document.getElementById('preview-btn').textContent = 'preview';
+    }
+  }
+
+  function copyAll() {
+    navigator.clipboard.writeText(buildText(collect())).then(() => {
+      const btn = document.getElementById('copy-btn');
+      btn.textContent = 'copied!';
+      btn.classList.add('copy-done');
+      setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copy-done'); }, 2000);
+      showToast('Copied — paste into ServiceNow work notes', 'ok');
+    });
+  }
+
+  async function clearAll() {
+    if (!confirm('Clear all fields?')) return;
+    ['customer','ticket','date','desc-field','s-field','o-field','a-field','p-field']
+      .forEach(id => document.getElementById(id).value = '');
+    document.getElementById('verified-by').value = 'ID';
+    document.getElementById('role').value = 'Student';
+    ['s','o','a','p'].forEach(k => cc(k+'-field', 'cc-'+k));
+    document.getElementById('preview-panel').classList.remove('visible');
+    document.getElementById('preview-btn').textContent = 'preview';
+    await fetch('/note', { method: 'DELETE' });
+    setDot('saved');
+    showToast('Cleared', 'info');
+  }
+
+  function showToast(msg, cls) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast ' + cls + ' show';
+    setTimeout(() => t.className = 'toast ' + cls, 2500);
+  }
+
+
+
+  document.getElementById('date').value = new Date().toISOString().split('T')[0];
+  loadNote();
+</script>
+</body>
+</html>
