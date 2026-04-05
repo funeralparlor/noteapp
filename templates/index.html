@@ -12,25 +12,32 @@
       --text: #1a1917; --muted: #8a8782; --hint: #b8b5b0;
       --accent: #1f6feb; --accent-dim: #e8f0fd;
       --green: #16a34a; --green-dim: #f0fdf4;
-      --amber: #b45309; --red: #dc2626; --red-dim: #fef2f2;
+      --amber: #b45309; --amber-dim: #fffbeb;
+      --red: #dc2626; --red-dim: #fef2f2;
+      --purple: #7c3aed; --purple-dim: #f5f3ff; --purple-border: #c4b5fd;
       --mono: 'IBM Plex Mono', monospace;
       --sans: 'IBM Plex Sans', sans-serif;
     }
     body { font-family: var(--sans); background: var(--bg); color: var(--text); min-height: 100vh; }
     .shell { max-width: 740px; margin: 0 auto; padding: 32px 24px 120px; }
+
+
     .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
     .brand { display: flex; align-items: center; gap: 8px; }
     .brand-mark { width: 22px; height: 22px; background: var(--text); border-radius: 4px; display: flex; align-items: center; justify-content: center; }
     .brand-mark span { color: #fff; font-size: 9px; font-weight: 500; font-family: var(--mono); }
     .brand-name { font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: 0.07em; text-transform: uppercase; font-family: var(--mono); }
-    .topbar-right { display: flex; align-items: center; gap: 10px; }
+    .topbar-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
     .save-status { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--hint); font-family: var(--mono); }
     .s-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--hint); transition: background 0.3s; }
     .s-dot.saving { background: var(--amber); }
     .s-dot.saved  { background: var(--green); }
-    .icon-btn { padding: 5px 11px; border: 1px solid var(--border); border-radius: 5px; background: var(--surface); color: var(--muted); font-size: 11px; font-family: var(--mono); cursor: pointer; transition: all 0.15s; }
+    .icon-btn { padding: 5px 11px; border: 1px solid var(--border); border-radius: 5px; background: var(--surface); color: var(--muted); font-size: 11px; font-family: var(--mono); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
     .icon-btn:hover { border-color: var(--text); color: var(--text); }
     .icon-btn.copy-done { border-color: var(--green); color: var(--green); background: var(--green-dim); }
+    .icon-btn.tpl-active { border-color: var(--purple); color: var(--purple); background: var(--purple-dim); }
+
+
     .file-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 18px; padding: 8px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 7px; font-family: var(--mono); font-size: 11px; color: var(--muted); flex-wrap: wrap; }
     .file-name { color: var(--accent); font-weight: 500; flex: 1; min-width: 80px; }
     .file-count { color: var(--hint); }
@@ -38,6 +45,8 @@
     .nav-btn { padding: 3px 9px; border: 1px solid var(--border); border-radius: 4px; background: var(--surface); color: var(--muted); font-size: 11px; font-family: var(--mono); cursor: pointer; transition: all 0.12s; }
     .nav-btn:hover:not(:disabled) { border-color: var(--text); color: var(--text); }
     .nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+
     .meta-grid   { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
     .meta-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
     .meta-field  { display: flex; flex-direction: column; gap: 4px; }
@@ -49,6 +58,8 @@
     .lookup-hint { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 10px; font-family: var(--mono); color: var(--hint); pointer-events: none; }
     .lookup-hint.found { color: var(--green); }
     .lookup-hint.new   { color: var(--amber); }
+
+
     .desc-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
     .desc-header { padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--bg); display: flex; align-items: center; justify-content: space-between; }
     .desc-label-row { display: flex; align-items: center; gap: 8px; }
@@ -58,6 +69,8 @@
     .no-copy-tag { font-size: 10px; color: var(--hint); font-family: var(--mono); border: 1px solid var(--border); padding: 2px 7px; border-radius: 4px; }
     .desc-body textarea { width: 100%; border: none; outline: none; resize: none; padding: 14px 16px; font-size: 13px; line-height: 1.75; font-family: var(--sans); color: var(--text); background: var(--surface); min-height: 80px; user-select: none; -webkit-user-select: none; }
     .desc-body textarea::placeholder { color: var(--hint); }
+
+
     .soap-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
     .soap-header { padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--bg); display: flex; align-items: center; justify-content: space-between; }
     .soap-label { display: flex; align-items: center; gap: 10px; }
@@ -67,6 +80,8 @@
     .char-count { font-size: 10px; color: var(--hint); font-family: var(--mono); }
     .soap-body textarea { width: 100%; border: none; outline: none; resize: none; padding: 14px 16px; font-size: 13px; line-height: 1.78; font-family: var(--sans); color: var(--text); background: var(--surface); min-height: 90px; }
     .soap-body textarea::placeholder { color: var(--hint); }
+
+
     .actions { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; flex-wrap: wrap; gap: 8px; }
     .action-left { display: flex; gap: 8px; flex-wrap: wrap; }
     .act-btn { padding: 8px 16px; border-radius: 6px; font-size: 12px; font-family: var(--mono); cursor: pointer; transition: all 0.15s; border: 1px solid var(--border); }
@@ -78,6 +93,8 @@
     .act-btn.new-note:hover  { background: var(--accent-dim); border-color: var(--accent); }
     .act-btn.danger    { background: var(--surface); color: var(--red); border-color: #fca5a5; }
     .act-btn.danger:hover    { background: var(--red-dim); }
+
+
     .preview-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-top: 14px; display: none; }
     .preview-panel.visible { display: block; }
     .preview-header { padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--bg); display: flex; align-items: center; justify-content: space-between; }
@@ -87,11 +104,54 @@
     .preview-body { padding: 16px; font-family: var(--mono); font-size: 12px; line-height: 1.85; color: var(--text); white-space: pre-wrap; word-break: break-word; }
     .pk { font-weight: 500; color: var(--accent); }
     .pm { font-weight: 500; color: var(--muted); }
-    /* Scroll nav — using window.scrollTo so no anchor needed */
+
+
+    .tpl-panel { background: var(--surface); border: 1px solid var(--purple-border); border-radius: 10px; overflow: hidden; margin-bottom: 14px; display: none; }
+    .tpl-panel.visible { display: block; }
+    .tpl-panel-header { padding: 10px 16px; border-bottom: 1px solid var(--purple-border); background: var(--purple-dim); display: flex; align-items: center; justify-content: space-between; }
+    .tpl-panel-title { font-size: 11px; font-weight: 500; font-family: var(--mono); color: var(--purple); text-transform: uppercase; letter-spacing: 0.06em; }
+    .tpl-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+
+
+    .tpl-list-header { font-size: 10px; font-weight: 500; color: var(--hint); text-transform: uppercase; letter-spacing: 0.08em; font-family: var(--mono); margin-bottom: 8px; }
+    .tpl-list { display: flex; flex-direction: column; gap: 6px; }
+    .tpl-empty { font-size: 12px; color: var(--hint); font-family: var(--mono); padding: 4px 0; }
+    .tpl-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 7px; background: var(--bg); transition: border-color 0.15s; }
+    .tpl-item:hover { border-color: var(--purple-border); }
+    .tpl-item-info { flex: 1; min-width: 0; }
+    .tpl-item-name { font-size: 12px; font-weight: 500; color: var(--text); }
+    .tpl-item-preview { font-size: 11px; color: var(--muted); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .tpl-item-btns { display: flex; gap: 5px; flex-shrink: 0; align-items: center; }
+    .tpl-use-btn { padding: 4px 10px; border: 1px solid var(--purple-border); border-radius: 4px; background: var(--purple-dim); color: var(--purple); font-size: 10px; font-family: var(--mono); cursor: pointer; transition: all 0.12s; }
+    .tpl-use-btn:hover { background: var(--purple); color: #fff; border-color: var(--purple); }
+    .tpl-del-btn { padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; background: var(--surface); color: var(--hint); font-size: 10px; font-family: var(--mono); cursor: pointer; transition: all 0.12s; }
+    .tpl-del-btn:hover { border-color: var(--red); color: var(--red); background: var(--red-dim); }
+
+
+    .tpl-divider { border: none; border-top: 1px solid var(--border); }
+    .tpl-form-title { font-size: 11px; font-weight: 500; color: var(--text); margin-bottom: 10px; font-family: var(--mono); }
+    .tpl-form { display: flex; flex-direction: column; gap: 8px; }
+    .tpl-input { padding: 7px 10px; border: 1px solid var(--border); border-radius: 5px; font-size: 12px; font-family: var(--mono); color: var(--text); background: var(--surface); outline: none; transition: border 0.15s; width: 100%; }
+    .tpl-input:focus { border-color: var(--purple); }
+    .tpl-input::placeholder { color: var(--hint); }
+    .tpl-textarea { padding: 8px 10px; border: 1px solid var(--border); border-radius: 5px; font-size: 12px; font-family: var(--sans); color: var(--text); background: var(--surface); outline: none; transition: border 0.15s; width: 100%; resize: none; line-height: 1.6; min-height: 60px; }
+    .tpl-textarea:focus { border-color: var(--purple); }
+    .tpl-textarea::placeholder { color: var(--hint); }
+    .tpl-section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .tpl-section-label { font-size: 10px; color: var(--hint); font-family: var(--mono); margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.07em; }
+    .tpl-form-footer { display: flex; align-items: center; gap: 12px; }
+    .tpl-submit { padding: 8px 16px; border-radius: 6px; font-size: 12px; font-family: var(--mono); cursor: pointer; background: var(--purple); color: #fff; border: none; transition: opacity 0.15s; }
+    .tpl-submit:hover { opacity: 0.85; }
+    .tpl-submit:disabled { opacity: 0.4; cursor: default; }
+    .tpl-status { font-size: 11px; font-family: var(--mono); color: var(--green); }
+
+
     .scroll-nav { position: fixed; right: 20px; bottom: 28px; display: flex; flex-direction: column; gap: 6px; z-index: 100; }
     .scroll-btn { width: 36px; height: 36px; border-radius: 50%; background: var(--text); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: opacity 0.15s; box-shadow: 0 2px 6px rgba(0,0,0,0.18); }
     .scroll-btn:hover { opacity: 0.72; }
     .scroll-btn svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+
     .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.18); z-index: 299; display: none; }
     .overlay.open { display: block; }
     .drawer { position: fixed; top: 0; right: -310px; width: 290px; height: 100vh; background: var(--surface); border-left: 1px solid var(--border); z-index: 300; transition: right 0.22s ease; display: flex; flex-direction: column; }
@@ -105,11 +165,17 @@
     .drawer-item .di-name { font-size: 13px; font-weight: 500; color: var(--text); }
     .drawer-item .di-meta { font-size: 10px; color: var(--hint); font-family: var(--mono); margin-top: 2px; }
     .drawer-empty { padding: 20px 16px; font-size: 12px; color: var(--hint); font-family: var(--mono); }
+
+
     .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); padding: 8px 18px; border-radius: 6px; font-size: 12px; font-family: var(--mono); opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 999; white-space: nowrap; }
     .toast.show { opacity: 1; }
     .toast.ok   { background: var(--green-dim); color: var(--green); border: 1px solid var(--green); }
     .toast.info { background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent); }
-    .toast.warn { background: #fffbeb; color: var(--amber); border: 1px solid var(--amber); }
+    .toast.warn { background: var(--amber-dim); color: var(--amber); border: 1px solid var(--amber); }
+
+    @media (max-width: 520px) {
+      .tpl-section-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -123,7 +189,6 @@
   <div class="drawer-list" id="drawer-list"></div>
 </div>
 
-<!-- Scroll nav — calls window.scrollTo directly, no anchors needed -->
 <div class="scroll-nav">
   <button class="scroll-btn" title="Go to top"
     onclick="window.scrollTo({top:0,behavior:'smooth'})">
@@ -136,6 +201,8 @@
 </div>
 
 <div class="shell">
+
+
   <div class="topbar">
     <div class="brand">
       <div class="brand-mark"><span>SN</span></div>
@@ -146,11 +213,62 @@
         <div class="s-dot" id="s-dot"></div>
         <span id="s-label">all saved</span>
       </div>
+      <button class="icon-btn" id="tpl-btn" onclick="toggleTemplates()">templates</button>
       <button class="icon-btn" onclick="openDrawer()">notes</button>
       <button class="icon-btn" id="preview-btn" onclick="togglePreview()">preview</button>
       <button class="icon-btn" id="copy-btn" onclick="copyAll()">copy</button>
     </div>
   </div>
+
+
+  <div class="tpl-panel" id="tpl-panel">
+    <div class="tpl-panel-header">
+      <span class="tpl-panel-title">Templates</span>
+      <button class="icon-btn" onclick="toggleTemplates()">close</button>
+    </div>
+    <div class="tpl-body">
+
+
+      <div>
+        <div class="tpl-list-header">Your templates</div>
+        <div class="tpl-list" id="tpl-list">
+          <div class="tpl-empty">No templates yet — add one below.</div>
+        </div>
+      </div>
+
+      <hr class="tpl-divider">
+
+      <div>
+        <div class="tpl-form-title">Add a new template</div>
+        <div class="tpl-form">
+          <div>
+            <div class="tpl-section-label">Template name</div>
+            <input class="tpl-input" id="tpl-name" placeholder="e.g. Password Reset, VPN Issue, New Account..." />
+          </div>
+          <div class="tpl-section-grid">
+            <div>
+              <div class="tpl-section-label">Subjective (S)</div>
+              <textarea class="tpl-textarea" id="tpl-s" placeholder="Template text for S..."></textarea>
+            </div>
+            <div>
+              <div class="tpl-section-label">Assessment (A)</div>
+              <textarea class="tpl-textarea" id="tpl-a" placeholder="Template text for A..."></textarea>
+            </div>
+            <div>
+              <div class="tpl-section-label">Plan (P)</div>
+              <textarea class="tpl-textarea" id="tpl-p" placeholder="Template text for P..."></textarea>
+            </div>
+          </div>
+          <div class="tpl-form-footer">
+            <button class="tpl-submit" id="tpl-submit-btn" onclick="saveTemplate()">Save template</button>
+            <span class="tpl-status" id="tpl-status"></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 
   <div class="file-bar">
     <span>note:</span>
@@ -162,11 +280,13 @@
     </div>
   </div>
 
+
   <div class="meta-grid">
     <div class="meta-field">
       <span class="meta-label">Customer name</span>
       <div class="customer-wrap">
-        <input class="meta-input" id="customer" placeholder="Full name" oninput="onCustomerInput()" style="padding-right:58px;" />
+        <input class="meta-input" id="customer" placeholder="Full name"
+          oninput="onCustomerInput()" style="padding-right:58px;" />
         <span class="lookup-hint" id="lookup-hint"></span>
       </div>
     </div>
@@ -180,6 +300,7 @@
     </div>
   </div>
 
+
   <div class="meta-grid-3">
     <div class="meta-field">
       <span class="meta-label">Role</span>
@@ -190,13 +311,14 @@
     </div>
     <div class="meta-field">
       <span class="meta-label">Related Ticket #</span>
-      <input class="meta-input" id="ticket" placeholder="INC0000000" oninput="autoSave()" />
+      <input class="meta-input" id="ticket" placeholder="TCKT0000000" oninput="autoSave()" />
     </div>
     <div class="meta-field">
       <span class="meta-label">Date</span>
       <input class="meta-input" id="date" type="date" oninput="autoSave()" />
     </div>
   </div>
+
 
   <div class="desc-card">
     <div class="desc-header">
@@ -216,11 +338,15 @@
     </div>
   </div>
 
+  <!-- S/O -->
   <div class="soap-card">
     <div class="soap-header">
       <div class="soap-label">
-        <div class="soap-letter">S</div>
-        <div><div class="soap-title">Subjective</div><div class="soap-desc">What the customer reported</div></div>
+        <div class="soap-letter">s/o</div>
+        <div>
+          <div class="soap-title">Subjective</div>
+          <div class="soap-desc">What the customer reported</div>
+        </div>
       </div>
       <span class="char-count" id="cc-s">0</span>
     </div>
@@ -231,26 +357,15 @@
     </div>
   </div>
 
-  <div class="soap-card">
-    <div class="soap-header">
-      <div class="soap-label">
-        <div class="soap-letter">O</div>
-        <div><div class="soap-title">Objective</div><div class="soap-desc">What you observed — logs, findings, reproduction steps</div></div>
-      </div>
-      <span class="char-count" id="cc-o">0</span>
-    </div>
-    <div class="soap-body">
-      <textarea id="o-field" rows="4"
-        placeholder="e.g. Verified account in Active Directory — active, no lockout. sys_log shows auth error at 08:42..."
-        oninput="autoSave(); cc('o-field','cc-o')"></textarea>
-    </div>
-  </div>
-
+  <!-- A -->
   <div class="soap-card">
     <div class="soap-header">
       <div class="soap-label">
         <div class="soap-letter">A</div>
-        <div><div class="soap-title">Assessment</div><div class="soap-desc">Root cause, category, priority reasoning</div></div>
+        <div>
+          <div class="soap-title">Assessment</div>
+          <div class="soap-desc">Root cause, category, priority reasoning</div>
+        </div>
       </div>
       <span class="char-count" id="cc-a">0</span>
     </div>
@@ -261,11 +376,15 @@
     </div>
   </div>
 
+  <!-- P -->
   <div class="soap-card">
     <div class="soap-header">
       <div class="soap-label">
         <div class="soap-letter">P</div>
-        <div><div class="soap-title">Plan</div><div class="soap-desc">Actions taken, resolution, escalation, follow-up</div></div>
+        <div>
+          <div class="soap-title">Plan</div>
+          <div class="soap-desc">Actions taken, resolution, escalation, follow-up</div>
+        </div>
       </div>
       <span class="char-count" id="cc-p">0</span>
     </div>
@@ -276,6 +395,7 @@
     </div>
   </div>
 
+
   <div class="actions">
     <div class="action-left">
       <button class="act-btn primary"   onclick="copyAll()">copy for ServiceNow</button>
@@ -284,6 +404,7 @@
     </div>
     <button class="act-btn danger" onclick="clearCurrent()">clear</button>
   </div>
+
 
   <div class="preview-panel" id="preview-panel">
     <div class="preview-header">
@@ -295,34 +416,48 @@
     </div>
     <div class="preview-body" id="preview-body"></div>
   </div>
-</div>
+
+</div><
 
 <div class="toast" id="toast"></div>
 
 <script>
+
   const NS        = 'soapdoc_v1_';
   const IDX_KEY   = NS + '__index__';
+  const TPL_KEY   = NS + '__templates__';
+
+
   let currentKey  = null;
   let noteIndex   = [];
+  let templates   = [];
   let saveTimer   = null;
   let lookupTimer = null;
 
+ 
   function boot() {
     document.getElementById('date').value = today();
     noteIndex = loadIndex();
+    templates = loadTemplates();
     if (noteIndex.length > 0) loadNoteByKey(noteIndex[0]);
     updateFileBar();
     renderDrawer();
+    renderTemplateList();
+
     const desc = document.getElementById('desc-field');
-    desc.addEventListener('contextmenu', e => e.preventDefault());
+    ['copy', 'cut', 'contextmenu'].forEach(ev =>
+      desc.addEventListener(ev, e => e.preventDefault())
+    );
   }
 
   function today() { return new Date().toISOString().split('T')[0]; }
-  function loadIndex() { try { return JSON.parse(localStorage.getItem(IDX_KEY) || '[]'); } catch { return []; } }
-  function saveIndex() { localStorage.setItem(IDX_KEY, JSON.stringify(noteIndex)); }
-  function noteKey(slug) { return NS + slug; }
-  function slugify(n) { return (n||'').trim().toLowerCase().replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,'_') || 'unnamed'; }
-  function readNote(k) { try { return JSON.parse(localStorage.getItem(k)||'null'); } catch { return null; } }
+
+
+  function loadIndex()     { try { return JSON.parse(localStorage.getItem(IDX_KEY) || '[]'); } catch { return []; } }
+  function saveIndex()     { localStorage.setItem(IDX_KEY, JSON.stringify(noteIndex)); }
+  function noteKey(slug)   { return NS + slug; }
+  function slugify(n)      { return (n||'').trim().toLowerCase().replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,'_') || 'unnamed'; }
+  function readNote(k)     { try { return JSON.parse(localStorage.getItem(k)||'null'); } catch { return null; } }
 
   function writeNote(key, data) {
     data.savedAt = new Date().toISOString();
@@ -338,6 +473,10 @@
     saveIndex();
   }
 
+ 
+  function loadTemplates() { try { return JSON.parse(localStorage.getItem(TPL_KEY) || '[]'); } catch { return []; } }
+  function saveTemplates() { localStorage.setItem(TPL_KEY, JSON.stringify(templates)); }
+
   function collect() {
     return {
       customer:   document.getElementById('customer').value,
@@ -347,7 +486,6 @@
       date:       document.getElementById('date').value,
       desc:       document.getElementById('desc-field').value,
       s:          document.getElementById('s-field').value,
-      o:          document.getElementById('o-field').value,
       a:          document.getElementById('a-field').value,
       p:          document.getElementById('p-field').value,
     };
@@ -362,20 +500,20 @@
     document.getElementById('date').value        = d.date       || today();
     document.getElementById('desc-field').value  = d.desc       || '';
     document.getElementById('s-field').value     = d.s          || '';
-    document.getElementById('o-field').value     = d.o          || '';
     document.getElementById('a-field').value     = d.a          || '';
     document.getElementById('p-field').value     = d.p          || '';
-    ['s','o','a','p'].forEach(k => cc(k+'-field','cc-'+k));
-    setLookupHint('','');
+    cc('s-field','cc-s'); cc('a-field','cc-a'); cc('p-field','cc-p');
+    setLookupHint('', '');
     closePreview();
   }
+
 
   function autoSave() {
     setDot('saving');
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
       const d = collect();
-      if (!d.customer.trim() && !d.s && !d.o && !d.a && !d.p) { setDot('saved'); return; }
+      if (!d.customer.trim() && !d.s && !d.a && !d.p) { setDot('saved'); return; }
       const key = noteKey(slugify(d.customer || 'unnamed'));
       writeNote(key, d);
       currentKey = key;
@@ -394,23 +532,23 @@
     document.getElementById(cid).textContent = document.getElementById(fid).value.length;
   }
 
+
   function onCustomerInput() {
     autoSave();
     clearTimeout(lookupTimer);
     const val = document.getElementById('customer').value.trim();
-    if (!val) { setLookupHint('',''); return; }
+    if (!val) { setLookupHint('', ''); return; }
     lookupTimer = setTimeout(() => {
       const key = noteKey(slugify(val));
       const ex  = readNote(key);
       if (ex && key !== currentKey) {
-        setLookupHint('found','✓ found');
+        setLookupHint('found', '✓ found');
         fillForm(ex);
         currentKey = key;
-        updateFileBar();
-        renderDrawer();
+        updateFileBar(); renderDrawer();
         showToast('Loaded: ' + slugify(val), 'info');
       } else if (!ex) {
-        setLookupHint('new','new');
+        setLookupHint('new', 'new');
       }
     }, 500);
   }
@@ -421,13 +559,11 @@
     el.className = 'lookup-hint' + (type ? ' ' + type : '');
   }
 
+
   function loadNoteByKey(key) {
-    const d = readNote(key);
-    if (!d) return;
-    fillForm(d);
-    currentKey = key;
-    updateFileBar();
-    renderDrawer();
+    const d = readNote(key); if (!d) return;
+    fillForm(d); currentKey = key;
+    updateFileBar(); renderDrawer();
   }
 
   function navNote(dir) {
@@ -439,25 +575,24 @@
 
   function updateFileBar() {
     const idx  = noteIndex.indexOf(currentKey);
-    const slug = currentKey ? currentKey.replace(NS,'') : null;
+    const slug = currentKey ? currentKey.replace(NS, '') : null;
     document.getElementById('file-name').textContent  = slug ? slug + ' (browser)' : 'unsaved';
     document.getElementById('file-count').textContent = noteIndex.length > 0
-      ? idx >= 0 ? '('+(idx+1)+' of '+noteIndex.length+')' : '('+noteIndex.length+' saved)'
+      ? idx >= 0 ? '(' + (idx+1) + ' of ' + noteIndex.length + ')' : '(' + noteIndex.length + ' saved)'
       : '';
     document.getElementById('nav-prev').disabled = idx <= 0;
     document.getElementById('nav-next').disabled = idx < 0 || idx >= noteIndex.length - 1;
   }
 
+ 
   function newNote() {
     const d = collect();
-    if (d.customer.trim() || d.s || d.o || d.a || d.p) {
-      writeNote(noteKey(slugify(d.customer||'unnamed')), d);
+    if (d.customer.trim() || d.s || d.a || d.p) {
+      writeNote(noteKey(slugify(d.customer || 'unnamed')), d);
       showToast('Previous note saved', 'ok');
     }
-    currentKey = null;
-    fillForm({});
-    updateFileBar();
-    renderDrawer();
+    currentKey = null; fillForm({});
+    updateFileBar(); renderDrawer();
     document.getElementById('customer').focus();
     showToast('New note ready', 'info');
   }
@@ -465,13 +600,11 @@
   function clearCurrent() {
     if (!confirm('Delete this note?')) return;
     if (currentKey) deleteNote(currentKey);
-    currentKey = null;
-    fillForm({});
-    updateFileBar();
-    renderDrawer();
-    setDot('saved');
-    showToast('Note deleted', 'info');
+    currentKey = null; fillForm({});
+    updateFileBar(); renderDrawer();
+    setDot('saved'); showToast('Note deleted', 'info');
   }
+
 
   function buildText(d) {
     const meta = [];
@@ -482,18 +615,18 @@
     if (d.date)       meta.push('Date: '           + d.date);
     const lines = [];
     if (meta.length) lines.push(meta.join('  |  '), '');
-    lines.push('[S]', d.s||'—', '');
-    lines.push('[O]', d.o||'—', '');
-    lines.push('[A]', d.a||'—', '');
-    lines.push('[P]', d.p||'—');
+    lines.push('[S/O]', d.s || '—', '');
+    lines.push('[A]', d.a || '—', '');
+    lines.push('[P]', d.p || '—');
     return lines.join('\n');
   }
 
   function buildPreviewHTML(text) {
     return text
-      .replace(/\[([SOAP])\]/g,'<span class="pk">[$1]</span>')
-      .replace(/(Customer:|Verified by:|Role:|Related Ticket:|Date:)/g,'<span class="pm">$1</span>');
+      .replace(/\[([SAP])\]/g, '<span class="pk">[$1]</span>')
+      .replace(/(Customer:|Verified by:|Role:|Related Ticket:|Date:)/g, '<span class="pm">$1</span>');
   }
+
 
   function togglePreview() {
     const panel = document.getElementById('preview-panel');
@@ -502,15 +635,12 @@
     document.getElementById('preview-body').innerHTML = buildPreviewHTML(buildText(d));
     panel.classList.add('visible');
     document.getElementById('preview-btn').textContent = 'hide';
-    const key = noteKey(slugify(d.customer||'unnamed'));
-    writeNote(key, d);
-    currentKey = key;
-    updateFileBar();
-    renderDrawer();
-    setDot('saved');
+    const key = noteKey(slugify(d.customer || 'unnamed'));
+    writeNote(key, d); currentKey = key;
+    updateFileBar(); renderDrawer(); setDot('saved');
     document.getElementById('saved-on-preview').textContent = 'saved at ' + new Date().toLocaleTimeString();
     showToast('Preview saved', 'ok');
-    setTimeout(() => panel.scrollIntoView({behavior:'smooth',block:'start'}), 80);
+    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
   }
 
   function closePreview() {
@@ -518,44 +648,125 @@
     document.getElementById('preview-btn').textContent = 'preview';
   }
 
+ 
   function copyAll() {
     navigator.clipboard.writeText(buildText(collect())).then(() => {
       const btn = document.getElementById('copy-btn');
       btn.textContent = 'copied!'; btn.classList.add('copy-done');
-      setTimeout(() => { btn.textContent='copy'; btn.classList.remove('copy-done'); }, 2000);
+      setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copy-done'); }, 2000);
       showToast('Copied — paste into ServiceNow work notes', 'ok');
     });
   }
+
 
   function openDrawer()  { document.getElementById('drawer').classList.add('open'); document.getElementById('overlay').classList.add('open'); }
   function closeDrawer() { document.getElementById('drawer').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); }
 
   function renderDrawer() {
     const list = document.getElementById('drawer-list');
-    if (!noteIndex.length) { list.innerHTML='<div class="drawer-empty">No saved notes yet.</div>'; return; }
+    if (!noteIndex.length) { list.innerHTML = '<div class="drawer-empty">No saved notes yet.</div>'; return; }
     list.innerHTML = noteIndex.map(key => {
-      const d    = readNote(key)||{};
-      const slug = key.replace(NS,'');
-      const name = d.customer || slug.replace(/_/g,' ') || 'Unnamed';
+      const d    = readNote(key) || {};
+      const slug = key.replace(NS, '');
+      const name = d.customer || slug.replace(/_/g, ' ') || 'Unnamed';
       const meta = [d.role, d.ticket, d.date].filter(Boolean).join(' · ');
-      return `<div class="drawer-item ${key===currentKey?'active':''}" onclick="loadFromDrawer('${key}')">
-        <div class="di-name">${name}</div>
-        <div class="di-meta">${meta||slug}</div>
+      return `<div class="drawer-item ${key === currentKey ? 'active' : ''}" onclick="loadFromDrawer('${key}')">
+        <div class="di-name">${esc(name)}</div>
+        <div class="di-meta">${esc(meta || slug)}</div>
       </div>`;
     }).join('');
   }
 
   function loadFromDrawer(key) {
-    closeDrawer();
-    loadNoteByKey(key);
-    window.scrollTo({top:0,behavior:'smooth'});
+    closeDrawer(); loadNoteByKey(key);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+
+  function toggleTemplates() {
+    const panel = document.getElementById('tpl-panel');
+    const btn   = document.getElementById('tpl-btn');
+    const open  = panel.classList.contains('visible');
+    panel.classList.toggle('visible');
+    btn.classList.toggle('tpl-active', !open);
+    if (!open) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function renderTemplateList() {
+    const list = document.getElementById('tpl-list');
+    if (!templates.length) {
+      list.innerHTML = '<div class="tpl-empty">No templates yet — add one below.</div>';
+      return;
+    }
+    list.innerHTML = templates.map((t, i) => `
+      <div class="tpl-item">
+        <div class="tpl-item-info">
+          <div class="tpl-item-name">${esc(t.name)}</div>
+          <div class="tpl-item-preview">${esc((t.s || t.a || t.p || '').slice(0, 80))}</div>
+        </div>
+        <div class="tpl-item-btns">
+          <button class="tpl-use-btn" onclick="applyTemplate(${i})">use</button>
+          <button class="tpl-del-btn" onclick="deleteTemplate(${i})">del</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function applyTemplate(i) {
+    const t = templates[i]; if (!t) return;
+    const s = document.getElementById('s-field').value;
+    const a = document.getElementById('a-field').value;
+    const p = document.getElementById('p-field').value;
+    if ((s || a || p) && !confirm('Apply template "' + t.name + '"? This will replace your current S, A, and P fields.')) return;
+    if (t.s) document.getElementById('s-field').value = t.s;
+    if (t.a) document.getElementById('a-field').value = t.a;
+    if (t.p) document.getElementById('p-field').value = t.p;
+    cc('s-field','cc-s'); cc('a-field','cc-a'); cc('p-field','cc-p');
+    autoSave();
+    showToast('Template applied: ' + t.name, 'info');
+  }
+
+  function deleteTemplate(i) {
+    if (!confirm('Delete template "' + templates[i].name + '"?')) return;
+    templates.splice(i, 1);
+    saveTemplates();
+    renderTemplateList();
+    showToast('Template deleted', 'info');
+  }
+
+  function saveTemplate() {
+    const name = document.getElementById('tpl-name').value.trim();
+    const s    = document.getElementById('tpl-s').value.trim();
+    const a    = document.getElementById('tpl-a').value.trim();
+    const p    = document.getElementById('tpl-p').value.trim();
+
+    if (!name)         { showToast('Template name is required', 'warn'); return; }
+    if (!s && !a && !p){ showToast('Add text to at least one field', 'warn'); return; }
+
+    const btn = document.getElementById('tpl-submit-btn');
+    const sta = document.getElementById('tpl-status');
+    btn.disabled = true;
+
+    templates.unshift({ name, s, a, p, createdAt: new Date().toISOString() });
+    saveTemplates();
+    renderTemplateList();
+
+ 
+    ['tpl-name','tpl-s','tpl-a','tpl-p'].forEach(id => document.getElementById(id).value = '');
+    sta.textContent = 'Saved!';
+    setTimeout(() => { sta.textContent = ''; btn.disabled = false; }, 2000);
+    showToast('Template saved: ' + name, 'ok');
+  }
+
+  // ── Utils ─────────────────────────────────────────────────────────────────
+  function esc(str) {
+    return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
   function showToast(msg, cls) {
     const t = document.getElementById('toast');
-    t.textContent = msg; t.className = 'toast '+cls+' show';
-    clearTimeout(t._t);
-    t._t = setTimeout(() => t.className='toast '+cls, 2800);
+    t.textContent = msg; t.className = 'toast ' + cls + ' show';
+    clearTimeout(t._t); t._t = setTimeout(() => t.className = 'toast ' + cls, 2800);
   }
 
   boot();
