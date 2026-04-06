@@ -445,7 +445,7 @@
     renderTemplateList();
 
     const desc = document.getElementById('desc-field');
-    ['copy', 'cut', 'contextmenu'].forEach(ev =>
+    ['contextmenu'].forEach(ev =>
       desc.addEventListener(ev, e => e.preventDefault())
     );
   }
